@@ -1,0 +1,79 @@
+import javax.swing.*;
+import java.awt.event.*;
+
+public class MotorPHPayrollGUI {
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("MotorPH Payroll System");
+        frame.setSize(400, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+
+        JLabel nameLabel = new JLabel("Employee Name:");
+        nameLabel.setBounds(20, 20, 120, 25);
+        JTextField nameField = new JTextField();
+        nameField.setBounds(150, 20, 200, 25);
+
+        JLabel rateLabel = new JLabel("Hourly Rate (PHP):");
+        rateLabel.setBounds(20, 60, 120, 25);
+        JTextField rateField = new JTextField();
+        rateField.setBounds(150, 60, 200, 25);
+
+        JLabel hoursLabel = new JLabel("Hours Worked:");
+        hoursLabel.setBounds(20, 100, 120, 25);
+        JTextField hoursField = new JTextField();
+        hoursField.setBounds(150, 100, 200, 25);
+
+        JButton calcButton = new JButton("Calculate Pay");
+        calcButton.setBounds(130, 150, 130, 30);
+
+        JTextArea outputArea = new JTextArea();
+        outputArea.setBounds(20, 200, 350, 140);
+        outputArea.setEditable(false);
+
+        calcButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String name = nameField.getText();
+                    double hourlyRate = Double.parseDouble(rateField.getText());
+                    double hoursWorked = Double.parseDouble(hoursField.getText());
+
+                    double gross = hourlyRate * hoursWorked;
+
+                    double tax = gross * 0.12;
+                    double sss = gross * 0.045;
+                    double philhealth = gross * 0.03;
+                    double pagibig = gross * 0.02;
+                    double totalDeductions = tax + sss + philhealth + pagibig;
+                    double net = gross - totalDeductions;
+
+                    String payslip = "=== MotorPH Payslip ===\n";
+                    payslip += "Employee: " + name + "\n";
+                    payslip += String.format("Gross Salary: PHP %.2f\n", gross);
+                    payslip += String.format("Tax: PHP %.2f\n", tax);
+                    payslip += String.format("SSS: PHP %.2f\n", sss);
+                    payslip += String.format("PhilHealth: PHP %.2f\n", philhealth);
+                    payslip += String.format("Pag-IBIG: PHP %.2f\n", pagibig);
+                    payslip += String.format("Total Deductions: PHP %.2f\n", totalDeductions);
+                    payslip += String.format("Net Salary: PHP %.2f\n", net);
+
+                    outputArea.setText(payslip);
+
+                } catch (NumberFormatException ex) {
+                    outputArea.setText("Please enter valid numbers for rate and hours.");
+                }
+            }
+        });
+
+        frame.add(nameLabel);
+        frame.add(nameField);
+        frame.add(rateLabel);
+        frame.add(rateField);
+        frame.add(hoursLabel);
+        frame.add(hoursField);
+        frame.add(calcButton);
+        frame.add(outputArea);
+
+        frame.setVisible(true);
+    }
+}
