@@ -11,7 +11,7 @@ The MotorPH Payroll System is designed to streamline and automate payroll proces
 - Secure login and data access
 
 ## Technologies
-- Frontend: HTML, CSS, JavaScript (planned)
+- Frontend: HTML,JavaScript (planned)
 - Backend: PHP, MySQL (planned)
 - Tools: Google Docs, GitHub
 
